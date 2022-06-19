@@ -13,8 +13,6 @@
 		window.open(path, '_self');
 	}
 
-	console.log($page.url);
-
 	function back(){
 		const path = href.replace(/\/[^/]*$/, '');
 		window.open(path, '_self');

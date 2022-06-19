@@ -9,12 +9,10 @@ export async function handle({ event, resolve }){
 	const { url: { href, pathname } } = event;
 	const file = pathname.replace(/\/__data\.json$/, '');
 	const referer = event.request.headers.get('referer');
-	const { url } = event;
 	// append referer
 	const target = (referer && !referer.startsWith(href))
 		? path.join(cwd, referer.replace(event.url.origin, ''), path.basename(file))
 		: path.join(cwd, file);
-	// console.log({ url, referer, file, target});
 
 	const stat = await fs.promises.lstat(target);
 	switch(true){
