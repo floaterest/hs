@@ -5,7 +5,7 @@
 	import { page } from '$app/stores';
 
 	//@ts-ignore
-	const { root, cwd, folders, files } = $page.stuff;
+	const { root, cwd, sep, folders, files } = $page.stuff;
 	const { href, pathname } = $page.url;
 
 	function open(path){
@@ -19,10 +19,10 @@
 	}
 </script>
 
-<div>
-    <span>{root}</span>
+<div id="cwd">
+    <code>{root}</code>
     {#each cwd as dir}
-        <span>{dir}</span>
+        <code>{sep}{dir}</code>
     {/each}
 </div>
 <ul>
@@ -62,6 +62,16 @@
 </ul>
 
 <style lang="sass">
+    #cwd
+        display: flex
+
+        code
+            border-radius: 0.15em
+            cursor: pointer
+
+            &:hover
+                background-color: var(--dark)
+
     .icon
         font-size: 1em
         padding-right: 0.5em
@@ -76,12 +86,12 @@
     ul
         padding: 0
 
-    li
-        display: flex
-        padding-left: 1em
-        align-items: center
-        cursor: pointer
+        li
+            display: flex
+            padding-left: 1em
+            align-items: center
+            cursor: pointer
 
-        &:hover
-            background-color: var(--dark)
+            &:hover
+                background-color: var(--dark)
 </style>

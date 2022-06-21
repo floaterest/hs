@@ -12,8 +12,9 @@ export async function get({ locals: { root, cwd, items } }){
 				files.push(item);
 			}
 		}
-		cwd = cwd.replace(root, '').split(path.sep).filter(Boolean);
-		return { status: 200, body: { root, cwd, folders, files } };
+		const sep = path.sep;
+		cwd = cwd.replace(root, '').split(sep).filter(Boolean);
+		return { status: 200, body: { root, cwd, sep, folders, files } };
 	}else{
 		// I have no idea what to do here
 		return { status: 404 };
