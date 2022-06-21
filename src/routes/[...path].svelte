@@ -5,7 +5,7 @@
 	import { page } from '$app/stores';
 
 	//@ts-ignore
-	const { root, folders, files } = $page.stuff;
+	const { root, cwd, folders, files } = $page.stuff;
 	const { href, pathname } = $page.url;
 
 	function open(path){
@@ -19,6 +19,12 @@
 	}
 </script>
 
+<div>
+    <span>{root}</span>
+    {#each cwd as dir}
+        <span>{dir}</span>
+    {/each}
+</div>
 <ul>
     {#if pathname !== '/'}
         <li on:click={back}>
@@ -75,6 +81,7 @@
         padding-left: 1em
         align-items: center
         cursor: pointer
+
         &:hover
             background-color: var(--dark)
 </style>
