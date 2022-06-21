@@ -20,9 +20,9 @@
 </script>
 
 <div id="cwd">
-    <code>{root}</code>
-    {#each cwd as dir}
-        <code>{sep}{dir}</code>
+    <code on:click={()=>window.open('/','_self')}>{root}</code>
+    {#each cwd as { dir, cum }}
+        <code on:click={()=>window.open(cum,'_self')}>{sep}{dir}</code>
     {/each}
 </div>
 <ul>

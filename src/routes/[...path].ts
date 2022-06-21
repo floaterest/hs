@@ -13,7 +13,11 @@ export async function get({ locals: { root, cwd, items } }){
 			}
 		}
 		const sep = path.sep;
-		cwd = cwd.replace(root, '').split(sep).filter(Boolean);
+		let r = '';
+		cwd = cwd.replace(root, '').split(sep).filter(Boolean).map(dir => ({
+			dir,
+			cum: r += '/' + dir
+		}));
 		return { status: 200, body: { root, cwd, sep, folders, files } };
 	}else{
 		// I have no idea what to do here
