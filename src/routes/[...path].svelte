@@ -62,17 +62,19 @@
         user-select: none
 
         &.folder
-            fill: #ffe666
+            fill: var(--yellow)
 
         &.file
-            fill: white
+            fill: var(--white)
 
     ul
-        padding-left: 0
+        padding: 0
 
     li
         display: flex
+        padding-left: 1em
         align-items: center
         cursor: pointer
-
+        &:hover
+            background-color: var(--dark)
 </style>
