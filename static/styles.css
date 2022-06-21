@@ -21,3 +21,9 @@
     --purple: #a68cd9;
     --cyan: #66ffe6;
 }
+
+body{
+    background-color: var(--darker);
+    color: var(--white);
+    margin: 0;
+}
