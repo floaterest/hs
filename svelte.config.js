@@ -8,7 +8,7 @@ const config = {
     preprocess: preprocess(),
 
     kit: {
-        adapter: adapter({ out: 'out' })
+        adapter: adapter({ out: 'build' })
     }
 };
 
