@@ -16,7 +16,7 @@ export async function get({ locals: { root, cwd, items } }){
 		let r = '';
 		cwd = cwd.replace(root, '').split(sep).filter(Boolean).map(dir => ({
 			dir,
-			cum: r += '/' + dir
+			cum: r += '/' + dir // cumulative path
 		}));
 		return { status: 200, body: { root, cwd, sep, folders, files } };
 	}else{
