@@ -5,14 +5,19 @@ import * as fs from 'fs';
 const argv = path.resolve(process.argv[process.argv.length - 1]);
 const root = fs.existsSync(argv) ? argv : process.cwd();
 
+function split(http: string | null): string{
+	return http ? '/' + http.split('/').slice(3).join('/') : '';
+}
+
 export async function handle({ event, resolve }){
-	const { url: { href, pathname } } = event;
-	const file = pathname.replace(/\/__data\.json$/, '');
-	const referer = event.request.headers.get('referer');
-	// append referer
-	const cwd = (referer && !referer.startsWith(href))
-		? path.join(root, referer.replace(event.url.origin, ''), path.basename(file))
-		: path.join(root, file.replace(/\/$/, ''));
+	const pathname = event.url.pathname.replace(/\/__data\.json$/, '');
+	const referer = split(event.request.headers.get('referer'));
+	const rel = path.relative(referer, pathname);
+	// if the path goes up and down (can only be done by external .html files)
+	const cwd = rel.startsWith('..') && rel.split(path.sep).some(p => p !== '..')
+		? path.join(root, referer, pathname)
+		: path.join(root, pathname);
+
 	const stat = await fs.promises.lstat(cwd);
 	switch(true){
 		case stat.isFile():
