@@ -8,9 +8,9 @@
 	const { root, cwd, sep, folders, files } = $page.stuff;
 	const { href, pathname } = $page.url;
 
-	function open(path){
+	function open(path, file: boolean){
 		path = href.endsWith('/') ? `${href}${path}` : `${href}/${path}`;
-		window.open(path, '_self');
+		window.open(file ? path : path + '/', '_self');
 	}
 
 	function back(){
@@ -38,7 +38,7 @@
         </li>
     {/if}
     {#each folders as folder}
-        <li on:click={()=>open(folder)}>
+        <li on:click={()=>open(folder,false)}>
             <svg xmlns="http://www.w3.org/2000/svg" height="24px"
                  class="icon folder"
                  viewBox="0 0 24 24" width="24px" fill="#000000">
@@ -49,7 +49,7 @@
         </li>
     {/each}
     {#each files as file}
-        <li on:click={()=>open(file)}>
+        <li on:click={()=>open(file,true)}>
             <svg xmlns="http://www.w3.org/2000/svg" height="24px"
                  class="icon file"
                  viewBox="0 0 24 24" width="24px" fill="#000000">
