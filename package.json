@@ -13,6 +13,7 @@
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/adapter-node": "^1.0.0-next.70",
     "@sveltejs/kit": "next",
+    "@types/mime": "^2.0.3",
     "svelte": "^3.44.0",
     "svelte-check": "^2.2.6",
     "svelte-preprocess": "^4.10.1",
@@ -21,6 +22,7 @@
   },
   "type": "module",
   "dependencies": {
+    "mime": "^3.0.0",
     "sass": "^1.49.9"
   }
 }
