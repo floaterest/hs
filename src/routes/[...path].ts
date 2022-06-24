@@ -23,6 +23,7 @@ export async function get({ locals: { type, root, cwd, content } }){
 			}));
 			return { body: { type, root, cwd, sep, folders, files } };
 		case Type.File:
+			content = '' + content;
 			return { body: { type, root, cwd, content } };
 		default:
 			// I have no idea what to do here
