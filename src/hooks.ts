@@ -12,16 +12,16 @@ export async function handle({ event, resolve }){
 	const pathname = event.url.pathname.replace(/\/__data\.json$/, '');
 	const cwd = path.join(root, pathname);
 	const stat = await fs.promises.lstat(cwd);
-	let content: string | string[];
+	let content: Buffer | string[];
 	// assume not dir => is file
 	const type = stat.isDirectory() ? Type.Folder : Type.File;
 	switch(type){
 		case Type.File:
-			const t = mime.getType(cwd);
-			content = '' + await fs.promises.readFile(cwd);
-			if(t && t !== 'text/plain'){
+			const ty = mime.getType(cwd);
+			content = await fs.promises.readFile(cwd);
+			if(ty && ty !== 'text/plain'){
 				return new Response(content, {
-					headers: { 'Content-Type': t + ';charset=utf-8', }
+					headers: { 'Content-Type': ty + ';charset=utf-8', }
 				});
 			}
 			break;
