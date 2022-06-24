@@ -21,9 +21,9 @@ export async function get({ locals: { type, root, cwd, content } }){
 				dir,
 				cum: r += '/' + dir // cumulative path
 			}));
-			return { body: { root, cwd, sep, folders, files } };
+			return { body: { type, root, cwd, sep, folders, files } };
 		case Type.File:
-			return { body: { root, cwd, content } };
+			return { body: { type, root, cwd, content } };
 		default:
 			// I have no idea what to do here
 			return { status: 404 };
