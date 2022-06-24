@@ -3,7 +3,7 @@ import * as fs from 'fs';
 
 import { Type } from '$lib/types';
 
-import mime from 'mime';
+import mime from 'mime/lite.js';
 
 const argv = path.resolve(process.argv[process.argv.length - 1]);
 const root = fs.existsSync(argv) ? argv : process.cwd();
