@@ -22,6 +22,7 @@
         <code on:click={()=>window.open(cum,'_self')}>{sep}{dir}</code>
     {/each}
 </div>
+<!-- icons from material icons / google fonts -->
 <ul>
     {#if pathname !== '/'}
         <li on:click={back}>
