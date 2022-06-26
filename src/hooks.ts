@@ -3,7 +3,7 @@ import * as fs from 'fs';
 
 import { Type } from '$lib/types';
 
-import mime from 'mime/lite.js';
+import mime from 'mime';
 
 const argv = path.resolve(process.argv[process.argv.length - 1]);
 const root = fs.existsSync(argv) ? argv : process.cwd();
@@ -19,7 +19,7 @@ export async function handle({ event, resolve }){
 		case Type.File:
 			const ty = mime.getType(cwd);
 			content = await fs.promises.readFile(cwd);
-			if(ty && ty !== 'text/plain'){
+			if(ty && !ty.startsWith('text')){
 				return new Response(content, {
 					headers: { 'Content-Type': ty + ';charset=utf-8', }
 				});
