@@ -8,11 +8,15 @@ export async function get({ locals: { type, root, cwd, content } }){
 		case Type.Folder:
 			const files = [], folders = [];
 			for(const item of content){
-				const stat = await fs.promises.lstat(path.join(cwd, item));
-				if(stat.isDirectory()){
-					folders.push(item);
-				}else if(stat.isFile()){
+				if(item.mime){
 					files.push(item);
+				}else{
+					const stat = await fs.promises.lstat(path.join(cwd, item.path));
+					if(stat.isDirectory()){
+						folders.push(item.path);
+					}else if(stat.isFile()){
+						files.push(item);
+					}
 				}
 			}
 			const sep = path.sep;
