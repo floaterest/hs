@@ -10,7 +10,7 @@ const root = fs.existsSync(argv) ? argv : process.cwd();
 
 export async function handle({ event, resolve }){
 	const pathname = event.url.pathname.replace(/\/__data\.json$/, '');
-	const cwd = path.join(root, pathname);
+	const cwd = decodeURIComponent(path.join(root, pathname));
 	const stat = await fs.promises.lstat(cwd);
 	let content: Buffer | any[];
 	// assume not dir => is file
