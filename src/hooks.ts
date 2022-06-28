@@ -19,7 +19,6 @@ export async function handle({ event, resolve }){
 		case Type.File:
 			const ty = mime.getType(cwd);
 			content = await fs.promises.readFile(cwd);
-			console.log({ ty });
 			if(!ty || ty === 'text/html' || !ty.startsWith('text')){
 				return new Response(content, {
 					headers: { 'Content-Type': ty + ';charset=utf-8', }
