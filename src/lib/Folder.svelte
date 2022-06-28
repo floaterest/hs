@@ -92,6 +92,7 @@
 
             &:hover
                 background-color: var(--dark)
+                text-decoration: underline
 
     .icon
         font-size: 1em
