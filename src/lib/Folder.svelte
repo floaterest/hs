@@ -21,7 +21,7 @@
     {#each data as { path, type }}
         <div>
             <span class="material-icons-round {type}">{type}</span>
-            <a href="{url({path,type})}" target="_blank">{path}</a>
+            <a href="{url({path,type})}" target="_top">{path}</a>
         </div>
     {/each}
 </div>
