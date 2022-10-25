@@ -36,7 +36,8 @@ const respond = async(path: string, type: string) => new Response(
 
 
 export const load: PageServerLoad = async({ url }) => {
-    const path = decodeURIComponent(join(root, url.pathname));
+    const { pathname } = url;
+    const path = decodeURIComponent(join(root, pathname));
     const type = await stat(path);
     let data;
     switch(type){
@@ -52,7 +53,9 @@ export const load: PageServerLoad = async({ url }) => {
             if(await stat(index)){
                 return await respond(index, 'text/html');
             }
-            const map = async(path: string) => ({ path, type: await stat(path) }) as Entry;
+            const map = async(path: string) => ({
+                path, type: await stat(join(root, pathname, path))
+            }) as Entry;
             data = (await Promise.all((await fs.readdir(path)).map(map))).sort(sort);
             break;
     }
