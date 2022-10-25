@@ -35,5 +35,6 @@
         color: $yellow
     a
         text-decoration: none
+        padding-left: 0.1em
         color: unset
 </style>
