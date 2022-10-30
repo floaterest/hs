@@ -1,5 +1,3 @@
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async({ locals }) => {
-    return locals;
-};
+export const load: PageServerLoad = async({ locals }) => locals;
