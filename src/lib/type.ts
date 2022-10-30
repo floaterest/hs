@@ -12,6 +12,5 @@ export type Entry = {
 export type Content = {
     root: string,
     type: Type,
-    path: string,
     data: Buffer | Entry[]
 }

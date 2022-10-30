@@ -53,7 +53,7 @@ export const handle: Handle = async({ event, resolve }) => {
             if(await stat(index) == Type.File){
                 return respond(index, html);
             }
-            const locals = { root, path, type, data: await readdir(path) };
+            const locals = { root, type, data: await readdir(path) };
             return resolve(Object.assign(event, { locals }));
     }
     return resolve(event);

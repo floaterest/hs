@@ -4,7 +4,6 @@
     import { page } from '$app/stores';
 
     export let root: string;
-    export let path: string;
     export let data: Entry[];
 
     const { href, pathname } = $page.url;
@@ -16,6 +15,10 @@
     }
 
 </script>
+
+<div id="cwd">
+    <code><a href="/" target="_self">{root}</a></code>
+</div>
 
 {#each data as { path, type }}
     <div class="entry">
