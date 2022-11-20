@@ -8,7 +8,7 @@
     const { type, data, cwd } = $page.data as Locals;
 </script>
 {#if type === Type.Folder}
-    <Folder {cwd} {data}/>
+    <Folder {...$page.data}/>
 {:else}
     {#if type === Type.File}
         {@html data}

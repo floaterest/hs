@@ -54,7 +54,7 @@ export const handle: Handle = async({ event, resolve }) => {
                 ({ arr, acc }, cur) => reduce(arr, join(acc, cur), sep + cur),
                 { arr: [{ acc: '/', cur: root }] as AccCur[], acc: '/' }
             ).arr;
-            const locals = { type, data, cwd } as Locals;
+            const locals = { type, data, cwd, root } as Locals;
             return resolve(Object.assign(event, { locals }));
     }
     return resolve(event);

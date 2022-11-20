@@ -5,8 +5,23 @@
 
     export let cwd: AccCur[];
     export let data: Entry[];
+    export let root: string;
 
     const { href } = $page.url;
+    let files: FileList;
+    $: if(files){
+        for(const file of files){
+            let r = new FileReader();
+            // r.onload = ({ target }) => console.log(target?.result);
+            r.onload = ({ target }) => fetch('./', {
+                method: 'POST',
+                body: target?.result,
+                headers: { root, name: file.name }
+            });
+            // r.readAsBinaryString(file);
+            r.readAsBinaryString(file);
+        }
+    }
 
     function url({ path, type }: Entry){
         // add path after href
@@ -20,6 +35,11 @@
         <a href="{acc}" target="_self">{cur}</a>
     {/each}
 </div>
+
+<!-- <form method="POST"> -->
+<input bind:files multiple type="file" name="files"/>
+    <!-- <button>Submit</button> -->
+<!-- </form> -->
 
 {#each data as { path, type }}
     <div class="entry">
