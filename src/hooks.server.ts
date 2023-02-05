@@ -36,7 +36,7 @@ const readdir = async(path: string) => (await Promise.all(
 
 export const handle: Handle = async({ event, resolve }) => {
     const { url: { pathname } } = event;
-    const path = decodeURIComponent(join(root, pathname));
+    const path = decodeURIComponent(join(root, pathname)).replace(/\/$/, '');
     const type = await stat(path);
     switch(type){
         case Type.File:
