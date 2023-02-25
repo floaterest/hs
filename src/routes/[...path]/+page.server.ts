@@ -19,10 +19,11 @@ async function stat(path: string): Promise<Type>{
 
 function sort(lhs: Entry, rhs: Entry): number{
     /// sort entries (folder first)
-    if(lhs.type === Type.Folder && rhs.type === Type.File){
-        return -1;
+    if(lhs.type == rhs.type){
+        return lhs.path.localeCompare(rhs.path);
+    }else{
+        return lhs.type == Type.Folder ? -1 : 1;
     }
-    return lhs.path.localeCompare(rhs.path);
 }
 
 const root = await (async(r: string) => await stat(r) ? r : process.cwd())(
