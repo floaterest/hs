@@ -54,8 +54,8 @@ export const load: PageServerLoad = async({ url }) => {
             if(await stat(index)){
                 return await respond(index, 'text/html');
             }
-            const map = async(path: string) => ({
-                path, type: await stat(join(root, pathname, path))
+            const map = async(p: string) => ({
+                path: p, type: await stat(join(path, p))
             }) as Entry;
             data = (await Promise.all((await fs.readdir(path)).map(map))).sort(sort);
             break;
