@@ -34,11 +34,16 @@ function sort(lhs: Entry, rhs: Entry): number{
     }
 }
 
+const readdir = async(path: string) => (await Promise.all(
+    (await fs.readdir(path)).map(async(p: string) => ({
+        path: p, type: await stat(join(path, p))
+    }))
+)).sort(sort) as Entry[];
+
 export const handle: Handle = async({ event, resolve }) => {
     const { url: { pathname } } = event;
     const path = decodeURIComponent(join(root, pathname));
     const type = await stat(path);
-    // let data;
     switch(type){
         case Type.File:
             const ty = mime.getType(path);
@@ -48,6 +53,8 @@ export const handle: Handle = async({ event, resolve }) => {
             if(await stat(index) == Type.File){
                 return respond(index, html);
             }
+            const locals = { root, path, type, data: await readdir(path) };
+            return resolve(Object.assign(event, { locals }));
     }
     return resolve(event);
 };
