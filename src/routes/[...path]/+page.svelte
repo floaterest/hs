@@ -5,10 +5,10 @@
     import { Type } from '$lib/type';
     import Folder from '$lib/Folder.svelte';
 
-    const { root, path, type, data } = $page.data as Content;
+    const { root, type, data } = $page.data as Content;
 </script>
 {#if type === Type.Folder}
-    <Folder {root} {path} {data}/>
+    <Folder {root} {data}/>
 {:else}
     {#if type === Type.File}
         {@html data}
