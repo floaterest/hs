@@ -17,20 +17,19 @@
 
 </script>
 
-<div id="ls">
-    {#each data as { path, type }}
-        <div>
-            <span class="material-icons-round {type}">{type}</span>
-            <a href="{url({path,type})}" target="_top">{path}</a>
-        </div>
-    {/each}
-</div>
+{#each data as { path, type }}
+    <div class="entry">
+        <span class="material-icons-round {type}">{type}</span>
+        <a href="{url({path,type})}" target="_top">{path}</a>
+    </div>
+{/each}
 
 <style lang="sass">
     @use 'colors' as *
-    #ls > div
+    .entry
         display: flex
         align-items: center
+        white-space: nowrap
     .folder
         color: $yellow
     a
