@@ -18,7 +18,6 @@
 </script>
 
 <div id="cwd">
-    --->
     {#each cwd as { acc, cur }}
         <a href="{acc}" target="_self">{cur}</a>
     {/each}
@@ -35,6 +34,8 @@
     @use 'colors' as *
     #cwd
         display: flex
+        font-family: 'Iosevka Web', sans-serif
+
     .entry
         display: flex
         align-items: center
