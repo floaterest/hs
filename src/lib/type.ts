@@ -9,8 +9,12 @@ export type Entry = {
     path: string,
     type: Type,
 }
-export type Content = {
-    root: string,
+
+/// cumulative current working directory
+export type AccCur = { acc: string, cur: string }
+
+export type Locals = {
     type: Type,
-    data: Buffer | Entry[]
+    data: Entry[]
+    cwd: AccCur[],
 }

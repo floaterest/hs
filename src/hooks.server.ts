@@ -1,7 +1,7 @@
-import { join, resolve } from 'path';
+import { join, resolve, sep } from 'path';
 import type { Handle } from '@sveltejs/kit';
 import * as fs from 'fs/promises';
-import type { Entry } from '$lib/type';
+import type { AccCur, Entry, Locals } from '$lib/type';
 import { Type } from '$lib/type';
 import * as mime from 'mime/lite';
 
@@ -53,7 +53,18 @@ export const handle: Handle = async({ event, resolve }) => {
             if(await stat(index) == Type.File){
                 return respond(index, html);
             }
-            const locals = { root, type, data: await readdir(path) };
+            const data = await readdir(path);
+            const reduce = (arr: AccCur[], acc: string, cur: string) => ({
+                arr: [...arr, { acc, cur }], acc
+            });
+            const cwd = join(root, pathname).split(sep).filter(Boolean).reduce(
+                ({ arr, acc }, cur) => reduce(arr, join(acc, cur), sep + cur),
+                { arr: [] as AccCur[], acc: '/' }
+            ).arr.filter(({ acc }) => acc.startsWith(root));
+            // get first one
+            const [{ acc }, ...rest] = cwd;
+            // first one's cur is acc
+            const locals = { type, data, cwd: [{ acc, cur: acc }, ...rest] } as Locals;
             return resolve(Object.assign(event, { locals }));
     }
     return resolve(event);
