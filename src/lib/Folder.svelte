@@ -13,8 +13,6 @@
         path = `${href}${href.endsWith('/') ? '' : '/'}${path}`;
         return type === Type.File ? path : path + '/';
     }
-
-    console.table(cwd);
 </script>
 
 <div id="cwd">
@@ -35,14 +33,14 @@
     #cwd
         display: flex
         font-family: 'Iosevka Web', sans-serif
-
+    a
+        text-decoration: none
+        color: unset
     .entry
         display: flex
         align-items: center
+        a
+            padding-left: 0.1em
     .folder
         color: $yellow
-    a
-        text-decoration: none
-        padding-left: 0.1em
-        color: unset
 </style>
