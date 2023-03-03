@@ -39,6 +39,8 @@
     .entry
         display: flex
         align-items: center
+        white-space: nowrap
+        overflow: clip
         a
             padding-left: 0.1em
     .folder
