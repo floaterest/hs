@@ -8,9 +8,10 @@ import * as mime from 'mime/lite';
 mime.define({ 'text/plain': ['ts'] }, true);
 
 const html = 'text/html';
-const root = await (async(r: string) => await stat(r) ? r : process.cwd())(
+/// root without trailing slash
+const root = (await (async(r: string) => await stat(r) ? r : process.cwd())(
     resolve(process.argv[process.argv.length - 1])
-);
+)).replace(/\/+$/, '');
 
 const respond = async(path: string, type: string | null) => new Response(
     await fs.readFile(path),
@@ -57,14 +58,11 @@ export const handle: Handle = async({ event, resolve }) => {
             const reduce = (arr: AccCur[], acc: string, cur: string) => ({
                 arr: [...arr, { acc, cur }], acc
             });
-            const cwd = join(root, pathname).split(sep).filter(Boolean).reduce(
+            const cwd = pathname.split(sep).filter(Boolean).reduce(
                 ({ arr, acc }, cur) => reduce(arr, join(acc, cur), sep + cur),
-                { arr: [] as AccCur[], acc: '/' }
-            ).arr.filter(({ acc }) => acc.startsWith(root));
-            // get first one
-            const [{ acc }, ...rest] = cwd;
-            // first one's cur is acc
-            const locals = { type, data, cwd: [{ acc, cur: acc }, ...rest] } as Locals;
+                { arr: [{ acc: '/', cur: root }] as AccCur[], acc: '/' }
+            ).arr;
+            const locals = { type, data, cwd } as Locals;
             return resolve(Object.assign(event, { locals }));
     }
     return resolve(event);
