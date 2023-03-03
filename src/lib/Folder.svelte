@@ -6,7 +6,7 @@
     export let cwd: AccCur[];
     export let data: Entry[];
 
-    const { href, pathname } = $page.url;
+    const { href } = $page.url;
 
     function url({ path, type }: Entry){
         // add path after href
