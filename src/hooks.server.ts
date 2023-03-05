@@ -3,20 +3,13 @@ import type { Handle } from '@sveltejs/kit';
 import * as fs from 'fs/promises';
 import type { AccCur, Entry, Locals } from '$lib/type';
 import { Type } from '$lib/type';
-import * as mime from 'mime/lite';
 
-mime.define({ 'text/plain': ['ts'] }, true);
-
-const html = 'text/html';
 /// root without trailing slash
 const root = (await (async(r: string) => await stat(r) ? r : process.cwd())(
     resolve(process.argv[process.argv.length - 1])
 )).replace(/\/+$/, '');
 
-const respond = async(path: string, type: string | null) => new Response(
-    await fs.readFile(path),
-    { headers: type ? { 'Content-Type': type + ';charset=utf-8' } : {} }
-);
+const file = async(path: string) => new Response(await fs.readFile(path));
 
 async function stat(path: string): Promise<Type>{
     /// returns entry type of path
@@ -47,12 +40,11 @@ export const handle: Handle = async({ event, resolve }) => {
     const type = await stat(path);
     switch(type){
         case Type.File:
-            const ty = mime.getType(path);
-            return respond(path, ty);
+            return file(path);
         case Type.Folder:
             const index = join(path, 'index.html');
             if(await stat(index) == Type.File){
-                return respond(index, html);
+                return file(index);
             }
             const data = await readdir(path);
             const reduce = (arr: AccCur[], acc: string, cur: string) => ({
