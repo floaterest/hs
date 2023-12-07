@@ -46,7 +46,7 @@
 
 <div id="cwd">
     {#each cwd as { acc, cur }}
-        <a href={acc} target="_self">{cur}</a>
+        <a style="white-space: nowrap" href={acc} target="_self">{decodeURIComponent(cur)}</a>
     {/each}
 </div>
 
